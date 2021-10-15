@@ -1,0 +1,121 @@
+:root {
+  font-size: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Poppins;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+  height: 100%;
+
+  background-color: #f7f7f7;
+}
+
+.unstyled {
+  color: unset;
+  text-decoration: none;
+}
+
+.unstyled {
+  color: unset;
+  text-decoration: none;
+}
+.header::after {
+  transform: scaleX(0) !important;
+}
+.header:hover:after {
+  transform: scaleX(0);
+}
+
+nav .react-wavy-link--active {
+  transform: scale(1.25);
+}
+
+.navbar .react-wavy-link--active:hover {
+  transform: scale(1.25) !important;
+  transition: none !important;
+}
+
+.navbar .react-wavy-link--active:after {
+  padding-top: 2px;
+  display: block;
+  content: "";
+  border-bottom: solid 2px black;
+  transform: scaleX(1);
+  transition: transform 250ms ease-in-out;
+}
+
+.navbar button:after {
+  padding-top: 2px;
+  display: block;
+  content: "";
+  border-bottom: solid 2px black;
+  transform: scaleX(0);
+  transition: transform 250ms ease-in-out;
+  margin: auto;
+  width: 65%;
+}
+
+.navbar button:hover:after {
+  padding-top: 2px;
+  transform: scaleX(1);
+  width: 65%;
+}
+
+.header::after {
+  display: none !important;
+}
+
+.opener {
+  color: green;
+}
+
+.rbc-today {
+  background-color: #00778469 !important;
+  color: #f7f7f7 !important;
+}
+
+.rbc-now {
+  color: #f7f7f7 !important;
+}
+
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+
+  cursor: pointer;
+}
+
+/* Remove excess padding and border in Firefox 4+ */
+button::moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.abbr {
+  border-bottom: dashed 1px gray;
+}
