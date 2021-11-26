@@ -108,6 +108,7 @@ const Content = (props) => {
 
   return (
     <StyledContent>
+      <div id="alerts"></div>
       <Switch>
         <Route exact path="/">
           <StyledMainGrid>

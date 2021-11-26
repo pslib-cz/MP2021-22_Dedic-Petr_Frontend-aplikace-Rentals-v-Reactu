@@ -58,9 +58,8 @@ const StyledFooter = styled.footer`
 
 const Footer = (props) => {
   var w = window.innerWidth;
-  console.log(w);
 
-  if(w < 700) {
+  if (w < 700) {
     return (
       <StyledFooter>
         <div className="dummy-footer"></div>

@@ -4,6 +4,9 @@ import {
   IDENTITY_CONFIGURATION,
   METADATA_OIDC,
 } from "../configuration/authorization";
+import ReactDOM from "react-dom";
+import { Alert } from "proomkatest";
+import axios from "axios";
 
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
 export const CLEAR_ACCESS_TOKEN = "CLEAR_ACCESS_TOKEN";
@@ -17,6 +20,8 @@ export const SILENT_RENEW_ERROR = "SILENT_RENEW_ERROR";
 export const SESSION_TERMINATED = "SESSION_TERMINATED";
 export const LOAD_USER_ERROR = "LOAD_USER_ERROR";
 export const USER_SIGNED_OUT = "USER_SIGNED_OUT";
+export const SET_ICON = "SET_ICON";
+export const UPDATE_PHOTO = "UPDATE_PHOTO";
 
 const userStore = window.localStorage;
 const userManager = new UserManager({
@@ -46,6 +51,9 @@ const parseJwt = (token) => {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case UPDATE_PHOTO:
+      return { ...state };
+
     case LOADING_USER:
       return { ...state, isUserLoading: true };
     case SET_ACCESS_TOKEN:
@@ -57,6 +65,40 @@ const reducer = (state, action) => {
     case CLEAR_ID_TOKEN:
       return { ...state, idToken: null };
     case USER_FOUND:
+      axios
+        .get("https://oauth.pslib.cloud/api/account/icon", {
+          responseType: "blob",
+          headers: {
+            Authorization: "Bearer " + action.accessToken,
+          },
+        })
+        .then((resp) => {
+          ReactDOM.render(
+            <>
+              <Alert
+                textColor="white"
+                width="16rem"
+                height="4rem"
+                color="#00ae7c"
+                delay="15000"
+              >
+                <i className="far fa-check-circle icon" /> Úspěšně přihlášen
+              </Alert>
+              <Alert
+                textColor="white"
+                width="16rem"
+                height="4rem"
+                color="#007784"
+                delay="10000"
+              >
+                <i className="far fa-check-circle icon" /> Fotka aktualizována
+              </Alert>
+            </>,
+            document.getElementById("alerts")
+          );
+          const url = URL.createObjectURL(resp.data);
+          document.getElementById("myImg").src = url;
+        });
       return {
         ...state,
         idToken: action.idToken,
@@ -65,10 +107,27 @@ const reducer = (state, action) => {
         profile: action.profile,
         isUserLoading: false,
       };
+
+    case SET_ICON: {
+      return {
+        ...state,
+        profileIcon: action.icon,
+        profileIconType: action.iconType,
+      };
+    }
     case USER_EXPIRED:
     case LOAD_USER_ERROR:
     case SILENT_RENEW_ERROR:
     case USER_SIGNED_OUT:
+      ReactDOM.render(
+        <Alert textColor="white" width="16rem" height="4rem" color="#d05555">
+          <i className="far fa-check-circle icon" /> Úspěšně odhlášen
+        </Alert>,
+        document.getElementById("alerts")
+      );
+      return {
+        ...state,
+      };
     case SESSION_TERMINATED:
       return {
         ...state,
@@ -78,6 +137,7 @@ const reducer = (state, action) => {
         profile: null,
         isUserLoading: false,
       };
+
     default: {
       return state;
     }
@@ -99,6 +159,7 @@ export const ApplicationProvider = (props) => {
         userId: tokenData.sub,
         profile: user.profile,
       });
+
       console.info("Uživatel byl přihlášen");
       console.log(user.profile.name);
     });
@@ -117,7 +178,6 @@ export const ApplicationProvider = (props) => {
     userManager.events.addUserSignedOut(() => {
       console.info("Uživatel byl odhlášen.");
     });
-
     userManager
       .getUser()
       .then((user) => {
@@ -129,6 +189,10 @@ export const ApplicationProvider = (props) => {
             idToken: user.id_token,
             userId: tokenData.sub,
             profile: user.profile,
+          });
+          console.log("LOGIN");
+          dispatch({
+            type: UPDATE_PHOTO,
           });
         } else if (!user || (user && user.expired)) {
           dispatch({

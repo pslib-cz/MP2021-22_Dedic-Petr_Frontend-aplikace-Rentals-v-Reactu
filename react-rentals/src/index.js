@@ -3,10 +3,16 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { ApplicationProvider } from "./providers/ApplicationProvider";
+import TopErrorBoundary from "./components/errors/TopErrorBoundary";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <TopErrorBoundary>
+      <ApplicationProvider>
+        <App />
+      </ApplicationProvider>
+    </TopErrorBoundary>
   </React.StrictMode>,
   document.getElementById("root")
 );

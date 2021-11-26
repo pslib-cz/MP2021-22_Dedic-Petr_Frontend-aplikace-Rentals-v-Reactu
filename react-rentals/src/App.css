@@ -14,7 +14,41 @@ body {
   scroll-behavior: smooth;
   height: 100%;
 
+  margin: 0;
+  padding: 0;
+
   background-color: #f7f7f7;
+}
+
+#alerts {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 99999999999999999;
+  display: grid;
+  place-items: center;
+}
+#alerts .proomka-alert {
+  margin-bottom: 1rem;
+}
+#alerts .proomka-alert:last-child {
+  margin-bottom: 0;
+}
+
+.proomka-alert {
+  animation: slide-up 0.5s ease;
+  transition: 250ms;
+}
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .unstyled {
@@ -72,10 +106,6 @@ nav .react-wavy-link--active {
   display: none !important;
 }
 
-.opener {
-  color: green;
-}
-
 .rbc-today {
   background-color: #00778469 !important;
   color: #f7f7f7 !important;
@@ -118,4 +148,36 @@ button::moz-focus-inner {
 
 .abbr {
   border-bottom: dashed 1px gray;
+}
+
+div.proomka-bar {
+  position: fixed;
+  background-color: #e9e9e9c2;
+  backdrop-filter: blur(8px);
+}
+
+.rentals p {
+  font-family: "Playfair Display";
+}
+
+.react-wavy-link--active {
+  background-color: #ffffff;
+  font-weight: 500 !important;
+}
+
+.react-wavy-link--active p {
+  font-weight: 500 !important;
+}
+
+#wavy-container {
+  position: relative;
+  z-index: 999999999999999999;
+}
+
+div.opener {
+  top: 8rem !important;
+  width: 4rem !important;
+  height: 4rem !important;
+  right: -4rem !important;
+  box-shadow: 0 8px 20px 0px #0000003b;
 }

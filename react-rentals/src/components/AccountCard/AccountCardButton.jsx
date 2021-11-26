@@ -58,7 +58,7 @@ const AccountCardButton = (props) => {
       return (
         <StyledAccountCardButton
           id={props.id}
-          className={(isActive ? "isOpened" : "") + " opener"}
+          className={(isActive ? "isOpened" : "") + " "}
         >
           <div>
             <i className="fas fa-bell trash"></i>
@@ -73,9 +73,7 @@ const AccountCardButton = (props) => {
       );
     } else {
       return (
-        <StyledAccountCardButton
-          className={(isActive ? "isOpened" : "") + " opener"}
-        >
+        <StyledAccountCardButton className={(isActive ? "isOpened" : "") + " "}>
           <div>
             <i className="fas fa-edit trash"></i>
             <i className="fas fa-trash trash"></i>
@@ -89,9 +87,7 @@ const AccountCardButton = (props) => {
     }
   } else {
     return (
-      <StyledAccountCardButton
-        className={(isActive ? "isOpened" : "") + " opener"}
-      >
+      <StyledAccountCardButton className={(isActive ? "isOpened" : "") + " "}>
         <div>
           <i
             className="fas fa-chevron-down trash chevron"

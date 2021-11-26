@@ -9,7 +9,7 @@ export const IDENTITY_CONFIGURATION = {
   post_logout_redirect_uri:
     process.env.REACT_APP_CLIENT_URL + "/oidc-signout-callback",
   response_type: "code",
-  scope: "openid profile email RentalsApi",
+  scope: "openid profile email RentalsApi IdentityServerApi",
   webAuthResponseType: "id_token token",
   filterProtocolClaims: true,
 };

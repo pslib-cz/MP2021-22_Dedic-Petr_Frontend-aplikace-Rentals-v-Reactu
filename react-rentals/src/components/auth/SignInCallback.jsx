@@ -4,7 +4,9 @@ import { useAppContext } from "../../providers/ApplicationProvider";
 
 const SignInCallback = (props) => {
   const [{ userManager }] = useAppContext();
+
   userManager.signinRedirectCallback();
+
   return <Redirect to="/" />;
 };
 
