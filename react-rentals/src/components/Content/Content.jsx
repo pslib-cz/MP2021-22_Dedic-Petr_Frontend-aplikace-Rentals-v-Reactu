@@ -26,7 +26,6 @@ import AdminListItemDate from "../Admin/AdminListItemDate";
 import AdminListItemUser from "../Admin/AdminListItemUser";
 import Detail from "../Detail/Detail";
 import ToolTip from "../ToolTip/ToolTip";
-import BehaviorIndex from "../BehaviorIndex/BehaviorIndex";
 import CardInfo from "../ContentCard/CardInfo";
 import SignButton from "../Footer/SignButton";
 
@@ -222,9 +221,6 @@ const Content = (props) => {
         </Route>
         <Route path="/account">
           <p>{profile ? profile.name : "Neznámý uživatel"}</p>
-          <ToolTip toolTipText="Důvěra: 60%">
-            <BehaviorIndex value="60"></BehaviorIndex>
-          </ToolTip>
           <StyledBagGrid>
             <AccountCard id="1">
               <BagText text="Vypujcka" description="28.5 - 3.7"></BagText>

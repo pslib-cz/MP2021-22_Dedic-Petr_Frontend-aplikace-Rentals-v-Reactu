@@ -80,7 +80,7 @@ const reducer = (state, action) => {
                 width="16rem"
                 height="4rem"
                 color="#00ae7c"
-                delay="15000"
+                delay="7500"
               >
                 <i className="far fa-check-circle icon" /> Úspěšně přihlášen
               </Alert>
@@ -89,7 +89,7 @@ const reducer = (state, action) => {
                 width="16rem"
                 height="4rem"
                 color="#007784"
-                delay="10000"
+                delay="5000"
               >
                 <i className="far fa-check-circle icon" /> Fotka aktualizována
               </Alert>

@@ -153,7 +153,7 @@ button::moz-focus-inner {
 div.proomka-bar {
   position: fixed;
   background-color: #e9e9e9c2;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px);
 }
 
 .rentals p {
