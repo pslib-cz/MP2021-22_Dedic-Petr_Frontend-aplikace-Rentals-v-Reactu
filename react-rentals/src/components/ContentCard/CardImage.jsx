@@ -4,13 +4,12 @@ import { Link } from "react-router-dom";
 import { WavyLink } from "react-wavy-transitions";
 
 const StyledCardImage = styled.div`
-  aspect-ratio: 1/1;
-  max-width: calc(300px - 30%);
-  margin: 15%;
-
   img {
-    width: 100%;
-    border-radius: 2.5rem;
+    aspect-ratio: 1/1;
+    border-radius: 1rem;
+    width: 85%;
+    margin: 7.5%;
+    object-fit: cover;
   }
 `;
 

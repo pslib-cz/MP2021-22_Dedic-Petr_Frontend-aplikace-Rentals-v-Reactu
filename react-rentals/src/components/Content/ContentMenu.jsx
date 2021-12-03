@@ -3,11 +3,10 @@ import Button from "../Button/Button";
 import CategoryButton from "../Button/CategoryButton";
 
 const StyledContentMenu = styled.div`
-  
   justify-content: space-between;
   align-items: center;
   align-items: flex-start;
-
+  margin: 0 1%;
   @media (max-width: 700px) {
     flex-direction: column;
     display: flex;
@@ -153,7 +152,6 @@ const ContentMenu = (props) => {
           </StyledSearchBoxWithin>
         </StyledSearchBox>
         <StyledDiv>
-          <CategoryButton isUnfiltered={props.isUnfiltered}></CategoryButton>
           <StyledFilterButton isUnfiltered={props.isUnfiltered}>
             <i className="fas fa-sort-amount-up-alt"></i>
           </StyledFilterButton>

@@ -20,11 +20,17 @@ body {
   background-color: #f7f7f7;
 }
 
-#alerts {
+.alerts {
   position: fixed;
   right: 1rem;
   bottom: 1rem;
   z-index: 99999999999999999;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#alerts,
+#messages {
   display: grid;
   place-items: center;
 }
@@ -32,6 +38,12 @@ body {
   margin-bottom: 1rem;
 }
 #alerts .proomka-alert:last-child {
+  margin-bottom: 0;
+}
+#messages .proomka-alert {
+  margin-bottom: 1rem;
+}
+#messages .proomka-alert:last-child {
   margin-bottom: 0;
 }
 

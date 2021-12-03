@@ -44,17 +44,12 @@ export const GetImg = () => {
 };
 
 function App() {
-  const [{ userManager, accessToken, profile, userId }] = useAppContext();
+  const [{ userManager, accessToken }] = useAppContext();
   const w = window.innerWidth;
-
-  console.log("token", accessToken);
-  console.log("id", userId);
-  console.log("profile", profile);
 
   return (
     <>
       <WavyContainer className="indexed" />
-      <div id="alerts"></div>
 
       <Router history={history}>
         <ScrollToTop>

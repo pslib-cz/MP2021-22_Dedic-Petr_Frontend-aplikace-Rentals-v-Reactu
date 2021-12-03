@@ -121,7 +121,7 @@ const reducer = (state, action) => {
     case USER_SIGNED_OUT:
       ReactDOM.render(
         <Alert textColor="white" width="16rem" height="4rem" color="#d05555">
-          <i className="far fa-check-circle icon" /> Úspěšně odhlášen
+          <i className="far fa-check-circle icon" /> Uživatel nepřihlášen
         </Alert>,
         document.getElementById("alerts")
       );
