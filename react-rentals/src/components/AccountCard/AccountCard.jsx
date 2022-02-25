@@ -10,16 +10,11 @@ const StyledAccountCard = styled.div`
   min-height: 8rem;
   display: grid;
   background-color: #fff;
-  border-radius: ${(props) => (props.isBordered ? "none" : "1.5rem")};
+  border-radius: 1.5rem;
   grid-template-columns: repeat(1, 1fr);
   transition: 250ms;
-
-  -webkit-box-shadow: ${(props) =>
-    props.isBordered ? "none" : "0px 5px 50px -30px #191919"};
-  box-shadow: ${(props) =>
-    props.isBordered ? "none" : "0px 5px 50px -30px #191919"};
-
-  border-bottom: ${(props) => (props.isBordered ? "2px grey solid" : "none")};
+  margin-bottom: 2.25rem;
+  box-shadow: 0px 5px 50px -30px #191919;
 
   @media (max-width: 700px) {
     min-height: 6rem;

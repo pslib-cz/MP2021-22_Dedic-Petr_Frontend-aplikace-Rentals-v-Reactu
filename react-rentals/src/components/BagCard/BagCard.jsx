@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 const StyledBagCard = styled.div`
-  margin: auto;
-  width: 90%;
+  margin-right: auto;
+  margin: 1rem;
+  width: calc(100% - 2rem);
   height: 8rem;
   display: flex;
   justify-content: space-between;
@@ -14,11 +15,50 @@ const StyledBagCard = styled.div`
 
   @media (max-width: 700px) {
     height: 6rem;
-    width: 100%;
+    width: 97.5%;
+    margin: auto;
   }
 
   @media (max-width: 600px) {
     height: 5rem;
+  }
+
+  .delete {
+    height: 100%;
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: auto;
+    margin-right: 2rem;
+
+    .proomka-badge {
+      cursor: pointer;
+      position: unset;
+      background-color: inherit;
+    }
+  }
+
+  .time {
+    opacity: 0;
+
+    width: 12rem;
+    height: 2rem;
+    border-radius: 1rem;
+
+    right: unset;
+    left: calc(50% - 6rem);
+    top: calc(-2.5rem);
+
+    background-color: #1a1a1a;
+
+    color: white;
+    font-size: 1rem;
+  }
+
+  &:hover {
+    .time {
+      opacity: 1;
+    }
   }
 `;
 

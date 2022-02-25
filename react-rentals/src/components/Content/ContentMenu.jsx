@@ -1,6 +1,30 @@
 import styled from "styled-components";
 import Button from "../Button/Button";
 import CategoryButton from "../Button/CategoryButton";
+import { Badge, Card, Modal } from "proomkatest";
+import { useState } from "react";
+import ProgressBar from "./ProgressBar";
+import { useEffect } from "react";
+
+const JustStyledDiv = styled.div`
+  .no {
+    overflow: hidden;
+  }
+
+  .create-item-form {
+    width: 75vw;
+    height: 75vh;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+`;
 
 const StyledContentMenu = styled.div`
   justify-content: space-between;
@@ -8,7 +32,7 @@ const StyledContentMenu = styled.div`
   align-items: flex-start;
   margin: 0 1%;
   @media (max-width: 700px) {
-    flex-direction: column;
+    flex-direction: row;
     display: flex;
 
     &.marginTop {
@@ -75,6 +99,9 @@ const StyledFilterButton = styled.div`
   -webkit-box-shadow: 0 8px 20px 0px #d1d1d1;
   box-shadow: 0 8px 20px 0px #d1d1d1;
   margin-left: auto;
+  @media (max-width: 700px) {
+    margin-left: unset;
+  }
 
   i {
     padding: 0.125rem;
@@ -85,14 +112,42 @@ const StyledFilterButton = styled.div`
 
 const StyledDiv = styled.div`
   @media (max-width: 700px) {
-    width: 100%;
+    width: auto;
+    margin-left: 2rem;
     display: flex;
-    margin-top: 3rem;
-    justify-content: space-between;
+    justify-content: right;
   }
 `;
 
 const ContentMenu = (props) => {
+  const [showModal, setShowModal] = useState(false);
+  const showModalFn = (e) => {
+    showModal === false
+      ? setShowModal(true)
+      : setTimeout(() => {
+          setShowModal(false);
+        }, 500);
+  };
+  function prevent(fn, defaultOnly) {
+    return (e, ...params) => {
+      e && e.preventDefault();
+      !defaultOnly && e && e.stopPropagation();
+      fn(e, ...params);
+    };
+  }
+
+  const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setCounter(counter + 5);
+    }, 1000);
+    //console.log(counter);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [counter]);
+
   if (props.isAdmin) {
     return (
       <>
@@ -117,7 +172,7 @@ const ContentMenu = (props) => {
     );
   } else if (props.isView) {
     return (
-      <>
+      <JustStyledDiv>
         <StyledContentMenu className="marginTop">
           <StyledSearchBox>
             <StyledSearchBoxWithin>
@@ -137,8 +192,30 @@ const ContentMenu = (props) => {
             </StyledFilterButton>
           </StyledDiv>
         </StyledContentMenu>
-        <Button text="Přidat" type="green"></Button>
-      </>
+        <Button text="Přidat" type="green" onClick={showModalFn}></Button>
+        <div className="no" onClick={showModalFn}>
+          {showModal ? (
+            <Modal>
+              <Card
+                className="proomka-card create-item-form"
+                onClick={prevent(() => void 0)}
+              >
+                <div></div>
+                <ProgressBar width={counter.toString()}>
+                  <Badge className="fifty proomka-badge">
+                    <i className="fas fa-check"></i>
+                    <Badge>Vytvoření položky</Badge>
+                  </Badge>
+                  <Badge className="hundred proomka-badge">
+                    <i className="fas fa-check"></i>
+                    <Badge>Nahrání obrázku</Badge>
+                  </Badge>
+                </ProgressBar>
+              </Card>
+            </Modal>
+          ) : null}
+        </div>
+      </JustStyledDiv>
     );
   } else {
     return (

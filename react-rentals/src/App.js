@@ -10,38 +10,8 @@ import SilentRenew from "./components/auth/SilentRenew";
 import SignOutCallback from "./components/auth/SignOutCallback";
 import { Proomkabar } from "proomkatest";
 import { useAppContext } from "./providers/ApplicationProvider";
-import axios from "axios";
-import ReactDOM from "react-dom";
-import { Alert } from "proomkatest";
 
 const history = createBrowserHistory();
-
-export const GetImg = () => {
-  const [{ accessToken }] = useAppContext();
-  axios
-    .get("https://oauth.pslib.cloud/api/account/icon", {
-      responseType: "blob",
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      },
-    })
-    .then((resp) => {
-      ReactDOM.render(
-        <Alert
-          textColor="white"
-          width="16rem"
-          height="4rem"
-          color="#00ae7c"
-          delay="5000"
-        >
-          <i className="far fa-check-circle icon" /> Fotka aktualizována
-        </Alert>,
-        document.getElementById("alerts")
-      );
-      const url = URL.createObjectURL(resp.data);
-      document.getElementById("myImg").src = url;
-    });
-};
 
 function App() {
   const [{ userManager, accessToken }] = useAppContext();
@@ -53,16 +23,19 @@ function App() {
 
       <Router history={history}>
         <ScrollToTop>
-          <div>
+          <div id="scroll">
             <Proomkabar className="indexed">
               {accessToken ? (
                 <img
-                  src=""
+                  src="./per.png"
                   id="myImg"
-                  alt="login"
+                  alt="me"
                   className="login"
                   onClick={() => {
                     userManager.signoutRedirect();
+                  }}
+                  onError={(e) => {
+                    e.currentTarget.src = "per.png";
                   }}
                 ></img>
               ) : (

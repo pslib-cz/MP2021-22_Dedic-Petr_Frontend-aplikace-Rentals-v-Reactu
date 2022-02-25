@@ -9,14 +9,6 @@ import CardDescription from "../ContentCard/CardDescription";
 import CardActionButton from "../ContentCard/CardActionButton";
 import CardDate from "../ContentCard/CardDate";
 import Error from "../404/Error";
-import BagImage from "../BagCard/BagImage";
-import BagCard from "../BagCard/BagCard";
-import BagText from "../BagCard/BagText";
-import BagDate from "../BagCard/BagDate";
-import BagMenu from "../BagCard/BagMenu";
-import Button from "../Button/Button";
-import AccountCard from "../AccountCard/AccountCard";
-import AccountCardDate from "../AccountCard/AccountCardDate";
 import AdminMenu from "../Admin/AdminMenu";
 import AdminCalendar from "../Admin/AdminCalendar";
 import AdminList from "../Admin/AdminList";
@@ -26,13 +18,11 @@ import AdminListItemDate from "../Admin/AdminListItemDate";
 import AdminListItemUser from "../Admin/AdminListItemUser";
 import Detail from "../Detail/Detail";
 import ToolTip from "../ToolTip/ToolTip";
-import SignButton from "../Footer/SignButton";
-import { Badge, Card, Alert } from "proomkatest";
-import { v4 as uuid } from "uuid";
-
-import { useAppContext } from "../../providers/ApplicationProvider";
 import { useState } from "react";
-import ReactDOM from "react-dom";
+import Home from "../Pages/Home";
+import Favourite from "../Pages/Favourite";
+import Bag from "../Pages/Bag";
+import Account from "../Pages/Account";
 
 const StyledContent = styled.div`
   width: 80%;
@@ -87,17 +77,14 @@ const StyledContent = styled.div`
     }
   }
 `;
-const StyledContentGrid = styled.div`
+export const StyledContentGrid = styled.div`
   width: 100%;
   height: auto;
   display: grid;
   grid-template-columns: repeat(6, 16.6666%);
 
-  &.liked-grid {
-    padding-top: 72px;
-  }
-
   .proomka-card {
+    position: relative;
     box-shadow: rgb(0 0 0 / 23%) 0px 8px 20px 0px;
     width: 90%;
     margin: 5%;
@@ -122,10 +109,11 @@ const StyledContentGrid = styled.div`
 
     p {
       margin-left: 7.5%;
-      white-space: nowrap;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 80%;
+      max-width: 85%;
 
       &.loading {
         max-width: 85%;
@@ -150,11 +138,13 @@ const StyledContentGrid = styled.div`
       font-size: 1.5rem;
       opacity: 0.8;
       font-weight: 700;
+      min-height: 35px;
     }
     .card-desc {
       opacity: 0.5;
       font-weight: 700;
       margin-bottom: 0.75rem;
+      min-height: 25px;
     }
     .proomka-badge {
       opacity: 0;
@@ -218,23 +208,10 @@ const StyledContentGrid = styled.div`
 
   @media (max-width: 700px) {
     grid-template-columns: repeat(2, 50%);
-    &.liked-grid {
-      padding-top: 32px;
-    }
   }
 `;
 
-const StyledBagGrid = styled.div`
-  width: ${(props) => (props.isSmall ? "100%" : "90%")};
-  margin-top: ${(props) => (props.isSmall ? "0" : "5%")};
-  padding: ${(props) => (props.isSmall ? "0" : "5%")};
-  height: auto;
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  row-gap: 32px;
-`;
-
-const StyledMainGrid = styled.div`
+export const StyledMainGrid = styled.div`
   width: 100%;
   height: auto;
   display: grid;
@@ -245,9 +222,34 @@ const StyledMainGrid = styled.div`
   @media (max-width: 1400px) {
     grid-template-columns: repeat(1, 1fr);
   }
+
+  .total {
+    text-align: right;
+    margin: 1rem;
+    border-bottom: solid grey 1px;
+    margin-left: auto;
+
+    p {
+      padding: 0.5rem;
+      font-size: 1.5rem;
+      display: block; /* or inline-block, at least its a block element */
+      width: auto;
+      height: auto; /* height cannot be defined */
+      white-space: normal; /* be sure its not 'nowrap'! ! ! :/ */
+    }
+    span {
+      color: black;
+      font-weight: 500;
+    }
+  }
+
+  .but {
+    margin-right: 1rem;
+    margin-left: auto;
+  }
 `;
 
-const StyledcategoryWrapper = styled.div`
+export const StyledcategoryWrapper = styled.div`
   height: auto;
   padding: 1rem 0 2rem 0;
   width: auto;
@@ -277,7 +279,7 @@ const StyledcategoryWrapper = styled.div`
     }
   }
 `;
-const StyledCategoryButton = styled.div`
+export const StyledCategoryButton = styled.div`
   height: 4rem;
   width: auto;
   background-color: ${(props) => (props.clicked ? "#007784" : "#fff")};
@@ -306,7 +308,55 @@ const StyledCategoryButton = styled.div`
   }
 `;
 
-const CategoryButton = (props) => {
+export const StyledIntroImage = styled.div`
+  width: 98%;
+  margin: 0 1%;
+  aspect-ratio: 5/1;
+  background-color: white;
+  border-radius: 1.5rem;
+  background: url(${(props) => props.bgImage});
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: rgb(0 0 0 / 10%) 0px 8px 20px 0px;
+  margin-bottom: 0.75rem;
+  margin-top: 1rem;
+
+  h1 {
+    font-size: 5rem;
+    color: white;
+    height: 100%;
+    display: grid;
+    align-items: center;
+    text-align: center;
+    @media (max-width: 1280px) {
+      font-size: 4rem;
+    }
+    @media (max-width: 900px) {
+      font-size: 3.5rem;
+    }
+    @media (max-width: 700px) {
+      font-size: 3rem;
+    }
+    @media (max-width: 600px) {
+      font-size: 2.75rem;
+    }
+    @media (max-width: 600px) {
+      font-size: 2.25rem;
+    }
+    @media (max-width: 500px) {
+      font-size: 1.75rem;
+    }
+  }
+
+  @media (max-width: 1280px) {
+    aspect-ratio: 3.5/1;
+  }
+  @media (max-width: 900px) {
+    margin-top: 5rem;
+  }
+`;
+
+export const CategoryButton = (props) => {
   const [clicked, setClicked] = useState(false);
   const click = () => {
     setClicked(!clicked);
@@ -325,57 +375,24 @@ const CategoryButton = (props) => {
 };
 
 const Content = (props) => {
-  const [{ profile }] = useAppContext();
-  const [loading, setLoading] = useState(true);
+  document.addEventListener("DOMContentLoaded", () => {
+    let options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.25,
+    };
 
-  setTimeout(() => {
-    setLoading(false);
-    ReactDOM.render(
-      <Alert
-        textColor="white"
-        width="16rem"
-        height="4rem"
-        color="#00ae7c"
-        delay="2000"
-      >
-        <i className="far fa-check-circle icon" /> Data načtena
-      </Alert>,
+    function handleIntersect(entries, observer) {
+      size = size + 12;
+      console.log(size);
+    }
 
-      document.getElementById("messages")
-    );
-  }, 5000);
+    let observer = new IntersectionObserver(handleIntersect, options);
+    const root = document.querySelector("#root");
+    observer.observe(root);
+  });
 
-  const Cards = [
-    { id: uuid(), name: "Foťák", desc: "Najetej foťákos" },
-    { id: uuid(), name: "Foťák", desc: "Najetej foťákos" },
-    { id: uuid(), name: "Foťák", desc: "Najetej foťákos" },
-    { id: uuid(), name: "Foťák", desc: "Najetej foťákos" },
-    { id: uuid(), name: "Foťák", desc: "Najetej foťákos" },
-    { id: uuid(), name: "Foťák", desc: "Najetej foťákos" },
-    { id: uuid(), name: "Foťák", desc: "Najetej foťákos" },
-    { id: uuid(), name: "Foťák", desc: "Najetej foťákos" },
-    { id: uuid(), name: "Foťák", desc: "Najetej foťákos" },
-    { id: uuid(), name: "Foťák", desc: "Najetej foťákos" },
-    { id: uuid(), name: "Foťák", desc: "Najetej foťákos" },
-    { id: uuid(), name: "Foťák", desc: "Najetej foťákos" },
-  ];
-
-  const Categrories = [
-    { id: uuid(), name: "Foťáky" },
-    { id: uuid(), name: "Stativy" },
-    { id: uuid(), name: "Kamery" },
-    { id: uuid(), name: "Příslušenství" },
-    { id: uuid(), name: "Ostatní" },
-  ];
-
-  const SelectedCategories = [];
-
-  const EditSelectedCategories = (newItem) => {
-    SelectedCategories.indexOf(newItem) === -1
-      ? SelectedCategories.push(newItem)
-      : SelectedCategories.splice(SelectedCategories.indexOf(newItem), 1);
-    console.log(SelectedCategories);
-  };
+  var size = 12;
 
   return (
     <StyledContent>
@@ -386,305 +403,16 @@ const Content = (props) => {
 
       <Switch>
         <Route exact path="/">
-          <StyledMainGrid>
-            <ContentMenu></ContentMenu>
-            <div className="shadow-wrap">
-              <StyledcategoryWrapper>
-                <div className="shadow"></div>
-                <div className="shadow"></div>
-                {Categrories.map((category, i) => (
-                  <CategoryButton
-                    key={i}
-                    action={() => EditSelectedCategories(category.name)}
-                  >
-                    {category.name}
-                  </CategoryButton>
-                ))}
-              </StyledcategoryWrapper>
-            </div>
-            {!Cards.length ? (
-              <Card
-                color="#d0af5529"
-                width="100%"
-                height="6rem"
-                className="proomka-card empty"
-              >
-                <Badge
-                  top="1rem"
-                  right="1rem"
-                  colorHover="white"
-                  color="#ffc21c"
-                  textColor="white"
-                  textColorHover="#ffc21c"
-                >
-                  <i className="fas fa-exclamation"></i>
-                </Badge>
-                Zvoleným filtrům nebo vyhledávání neodpovídá žádná položka
-              </Card>
-            ) : (
-              <></>
-            )}
-
-            <StyledContentGrid>
-              {loading ? (
-                <>
-                  <Card>
-                    <div className="loading-img"></div>
-                    <p className="card-header loading"></p>
-                    <p className="card-desc loading"></p>
-                    <Badge
-                      className="loading proomka-badge"
-                      color="#007784"
-                      colorHover="#009fb1"
-                      textColor="white"
-                    >
-                      <i className="fas fa-cart-plus"></i>
-                    </Badge>
-                  </Card>
-                  <Card>
-                    <div className="loading-img"></div>
-                    <p className="card-header loading"></p>
-                    <p className="card-desc loading"></p>
-                    <Badge
-                      className="loading proomka-badge"
-                      color="#007784"
-                      colorHover="#009fb1"
-                      textColor="white"
-                    >
-                      <i className="fas fa-cart-plus"></i>
-                    </Badge>
-                  </Card>
-                  <Card>
-                    <div className="loading-img"></div>
-                    <p className="card-header loading"></p>
-                    <p className="card-desc loading"></p>
-                    <Badge
-                      className="loading proomka-badge"
-                      color="#007784"
-                      colorHover="#009fb1"
-                      textColor="white"
-                    >
-                      <i className="fas fa-cart-plus"></i>
-                    </Badge>
-                  </Card>
-                  <Card>
-                    <div className="loading-img"></div>
-                    <p className="card-header loading"></p>
-                    <p className="card-desc loading"></p>
-                    <Badge
-                      className="loading proomka-badge"
-                      color="#007784"
-                      colorHover="#009fb1"
-                      textColor="white"
-                    >
-                      <i className="fas fa-cart-plus"></i>
-                    </Badge>
-                  </Card>
-                  <Card>
-                    <div className="loading-img"></div>
-                    <p className="card-header loading"></p>
-                    <p className="card-desc loading"></p>
-                    <Badge
-                      className="loading proomka-badge"
-                      color="#007784"
-                      colorHover="#009fb1"
-                      textColor="white"
-                    >
-                      <i className="fas fa-cart-plus"></i>
-                    </Badge>
-                  </Card>
-                  <Card>
-                    <div className="loading-img"></div>
-                    <p className="card-header loading"></p>
-                    <p className="card-desc loading"></p>
-                    <Badge
-                      className="loading proomka-badge"
-                      color="#007784"
-                      colorHover="#009fb1"
-                      textColor="white"
-                    >
-                      <i className="fas fa-cart-plus"></i>
-                    </Badge>
-                  </Card>
-                  <Card>
-                    <div className="loading-img"></div>
-                    <p className="card-header loading"></p>
-                    <p className="card-desc loading"></p>
-                    <Badge
-                      className="loading proomka-badge"
-                      color="#007784"
-                      colorHover="#009fb1"
-                      textColor="white"
-                    >
-                      <i className="fas fa-cart-plus"></i>
-                    </Badge>
-                  </Card>
-                  <Card>
-                    <div className="loading-img"></div>
-                    <p className="card-header loading"></p>
-                    <p className="card-desc loading"></p>
-                    <Badge
-                      className="loading proomka-badge"
-                      color="#007784"
-                      colorHover="#009fb1"
-                      textColor="white"
-                    >
-                      <i className="fas fa-cart-plus"></i>
-                    </Badge>
-                  </Card>
-                  <Card>
-                    <div className="loading-img"></div>
-                    <p className="card-header loading"></p>
-                    <p className="card-desc loading"></p>
-                    <Badge
-                      className="loading proomka-badge"
-                      color="#007784"
-                      colorHover="#009fb1"
-                      textColor="white"
-                    >
-                      <i className="fas fa-cart-plus"></i>
-                    </Badge>
-                  </Card>
-                  <Card>
-                    <div className="loading-img"></div>
-                    <p className="card-header loading"></p>
-                    <p className="card-desc loading"></p>
-                    <Badge
-                      className="loading proomka-badge"
-                      color="#007784"
-                      colorHover="#009fb1"
-                      textColor="white"
-                    >
-                      <i className="fas fa-cart-plus"></i>
-                    </Badge>
-                  </Card>
-                  <Card>
-                    <div className="loading-img"></div>
-                    <p className="card-header loading"></p>
-                    <p className="card-desc loading"></p>
-                    <Badge
-                      className="loading proomka-badge"
-                      color="#007784"
-                      colorHover="#009fb1"
-                      textColor="white"
-                    >
-                      <i className="fas fa-cart-plus"></i>
-                    </Badge>
-                  </Card>
-                  <Card>
-                    <div className="loading-img"></div>
-                    <p className="card-header loading"></p>
-                    <p className="card-desc loading"></p>
-                    <Badge
-                      className="loading proomka-badge"
-                      color="#007784"
-                      colorHover="#009fb1"
-                      textColor="white"
-                    >
-                      <i className="fas fa-cart-plus"></i>
-                    </Badge>
-                  </Card>
-                </>
-              ) : (
-                <>
-                  {Cards.map((card, i) => (
-                    <Card key={i}>
-                      <CardImage></CardImage>
-                      <p className="card-header">{card.name}</p>
-                      <p className="card-desc">{card.desc}</p>
-                      <Badge
-                        color="#007784"
-                        colorHover="#009fb1"
-                        textColor="white"
-                      >
-                        <i className="fas fa-cart-plus"></i>
-                      </Badge>
-                    </Card>
-                  ))}
-                </>
-              )}
-            </StyledContentGrid>
-          </StyledMainGrid>
+          <Home></Home>
         </Route>
         <Route path="/favorite">
-          <ContentMenu></ContentMenu>
-          <StyledContentGrid className="liked-grid">
-            <ContentCard isLeft>
-              <CardLike isLiked="true" />
-              <CardImage />
-              <CardText text="Toto je text 1" />
-              <CardDescription text="Toto je popisek" />
-              <CardDate dateFrom={"31.5"} dateTo={"2.6"} />
-              <CardActionButton />
-            </ContentCard>
-            <ContentCard isLeft>
-              <CardLike isLiked="true" />
-              <CardImage />
-              <CardText text="Toto je text 3" />
-              <CardDescription text="Toto je popisek" />
-              <CardDate dateFrom={"31.5"} dateTo={"2.6"} />
-              <CardActionButton />
-            </ContentCard>
-          </StyledContentGrid>
+          <Favourite></Favourite>
         </Route>
         <Route path="/bag">
-          <StyledBagGrid>
-            <BagCard>
-              <BagImage></BagImage>
-              <BagText
-                text="Nazev produktu"
-                description="Popisek produktu"
-              ></BagText>
-              <BagDate isAvailable></BagDate>
-              <BagMenu amount="1"></BagMenu>
-            </BagCard>
-            <BagCard>
-              <BagImage></BagImage>
-              <BagText
-                text="Nazev produktu"
-                description="Popisek produktu"
-              ></BagText>
-              <BagDate isAvailable></BagDate>
-              <BagMenu amount="1"></BagMenu>
-            </BagCard>
-            <BagCard>
-              <BagImage></BagImage>
-              <BagText
-                text="Nazev produktu"
-                description="Popisek produktu"
-              ></BagText>
-              <BagDate isAvailable></BagDate>
-              <BagMenu amount=""></BagMenu>
-            </BagCard>
-            <BagCard>
-              <BagImage></BagImage>
-              <BagText
-                text="Nazev produktu 4"
-                description="Popisek produktu 4"
-              ></BagText>
-              <BagDate></BagDate>
-              <BagMenu amount="3"></BagMenu>
-            </BagCard>
-            <Button type="green" text="Vypůjčit"></Button>
-          </StyledBagGrid>
+          <Bag></Bag>
         </Route>
         <Route path="/account">
-          <p>{profile ? profile.name : "Neznámý uživatel"}</p>
-          <StyledBagGrid>
-            <AccountCard id="1">
-              <BagText text="Vypujcka" description="28.5 - 3.7"></BagText>
-              <AccountCardDate isOngoing></AccountCardDate>
-            </AccountCard>
-            <AccountCard id="2">
-              <BagText text="Vypujcka" description="28.5 - 3.7"></BagText>
-              <AccountCardDate isReturned></AccountCardDate>
-            </AccountCard>
-            <AccountCard id="3">
-              <BagText text="Vypujcka" description="28.5 - 3.7"></BagText>
-              <AccountCardDate></AccountCardDate>
-            </AccountCard>
-            <SignButton />
-          </StyledBagGrid>
+          <Account></Account>
         </Route>
         <Route exact path="/admin">
           <AdminMenu></AdminMenu>

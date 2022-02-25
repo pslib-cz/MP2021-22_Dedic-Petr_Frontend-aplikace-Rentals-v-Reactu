@@ -66,7 +66,7 @@ const reducer = (state, action) => {
       return { ...state, idToken: null };
     case USER_FOUND:
       axios
-        .get("https://oauth.pslib.cloud/api/account/icon", {
+        .get("https://oauth.pslib.cloud/api/account/original", {
           responseType: "blob",
           headers: {
             Authorization: "Bearer " + action.accessToken,
@@ -97,6 +97,7 @@ const reducer = (state, action) => {
             document.getElementById("alerts")
           );
           const url = URL.createObjectURL(resp.data);
+          console.log(url);
           document.getElementById("myImg").src = url;
         });
       return {

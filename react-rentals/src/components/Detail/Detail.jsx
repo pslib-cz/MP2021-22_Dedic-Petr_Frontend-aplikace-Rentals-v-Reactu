@@ -52,6 +52,7 @@ const StyledDetail = styled.div`
   }
 
   .center {
+    height: auto;
     @media (max-width: 800px) {
       display: grid;
       align-items: center;

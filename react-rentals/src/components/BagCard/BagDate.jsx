@@ -3,6 +3,7 @@ import styled from "styled-components";
 const StyledBagDate = styled.div`
   height: 2rem;
   margin: 3rem 0 3rem 0;
+  position: relative;
 
   p {
     text-transform: uppercase;
@@ -38,12 +39,14 @@ const BagDate = (props) => {
           <p>
             <i className="far fa-check-circle"></i>
           </p>
+          {props.children}
         </StyledBagDate>
       );
     } else {
       return (
         <StyledBagDate isAvailable={props.isAvailable}>
           <p>Dostupné</p>
+          {props.children}
         </StyledBagDate>
       );
     }
@@ -54,12 +57,14 @@ const BagDate = (props) => {
           <p>
             <i className="far fa-times-circle"></i>
           </p>
+          {props.children}
         </StyledBagDate>
       );
     } else {
       return (
         <StyledBagDate isAvailable={props.isAvailable}>
           <p>Nedostupné</p>
+          {props.children}
         </StyledBagDate>
       );
     }

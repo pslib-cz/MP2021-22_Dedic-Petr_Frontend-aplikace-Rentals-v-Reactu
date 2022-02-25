@@ -29,25 +29,35 @@ const Button = (props) => {
   switch (props.type) {
     case "white":
       return (
-        <StyledButton color="white" darkText text={props.text}>
+        <StyledButton
+          color="white"
+          darkText
+          text={props.text}
+          onClick={props.onClick}
+        >
           <p>{props.text}</p>
         </StyledButton>
       );
     case "green":
       return (
-        <StyledButton color="#007784" text={props.text}>
+        <StyledButton color="#007784" text={props.text} onClick={props.onClick}>
           <p>{props.text}</p>
         </StyledButton>
       );
     case "red":
       return (
-        <StyledButton color="#d05555" text={props.text}>
+        <StyledButton color="#d05555" text={props.text} onClick={props.onClick}>
           <p>{props.text}</p>
         </StyledButton>
       );
     default:
       return (
-        <StyledButton color="white" darkText text={props.text}>
+        <StyledButton
+          color="white"
+          darkText
+          text={props.text}
+          onClick={props.onClick}
+        >
           <p>{props.text}</p>
         </StyledButton>
       );

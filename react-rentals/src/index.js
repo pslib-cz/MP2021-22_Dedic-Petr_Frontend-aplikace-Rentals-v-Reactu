@@ -7,13 +7,11 @@ import { ApplicationProvider } from "./providers/ApplicationProvider";
 import TopErrorBoundary from "./components/errors/TopErrorBoundary";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <TopErrorBoundary>
-      <ApplicationProvider>
-        <App />
-      </ApplicationProvider>
-    </TopErrorBoundary>
-  </React.StrictMode>,
+  <TopErrorBoundary>
+    <ApplicationProvider>
+      <App />
+    </ApplicationProvider>
+  </TopErrorBoundary>,
   document.getElementById("root")
 );
 
